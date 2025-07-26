@@ -79,3 +79,28 @@ Response: `204 No Content`
 ---
 
 **Note:** This app is for demo purposes only. All data is lost when the backend restarts.
+
+## Running Tests
+
+### Backend (API)
+- Run all tests: `cd backend && npm test`
+- Run with coverage: `cd backend && npm run test:coverage`
+
+### Frontend (UI)
+- Open Cypress: `cd frontend && npx cypress open`
+- Run Cypress headless: `cd frontend && npx cypress run`
+
+## CI
+
+![CI](https://github.com/OWNER/REPO/actions/workflows/test.yml/badge.svg)
+
+- On every push or pull request, the pipeline runs backend (Jest) and frontend (Cypress) tests.
+- Cypress screenshots are uploaded as artifacts on failure.
+- Backend coverage report is uploaded as an artifact.
+
+## Tool Documentation
+- [Cypress](https://docs.cypress.io/)
+- [Jest](https://jestjs.io/)
+- [Supertest](https://github.com/visionmedia/supertest)
+
+See `TEST_PLAN.md` for detailed test plan.

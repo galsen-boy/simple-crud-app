@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      backend:
+        image: node:20
+        ports:
+          - 3001:3001
+        options: >-
+          --health-cmd "curl --fail http://localhost:3001 || exit 1"
+          --health-interval 5s
+          --health-timeout 2s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
+      - name: Start backend
+        run: |
+          cd backend
+          nohup node index.js &
+          sleep 5
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+      - name: Run backend tests (Jest)
+        run: |
+          cd backend
+          npm test -- --coverage
+      - name: Run Cypress tests (headless)
+        run: |
+          npx cypress install
+          cd frontend
+          npx cypress run || (echo 'Cypress failed'; exit 1)
+      - name: Upload Cypress screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: frontend/cypress/screenshots
+      - name: Upload backend coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: backend/coverage/lcov-report 
