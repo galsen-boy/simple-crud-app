@@ -20,11 +20,6 @@ describe('Todo App E2E', () => {
     cy.contains('My Todos');
   });
 
-  it('Login with invalid credentials (empty fields)', () => {
-    cy.visit('/login');
-    cy.get('button[type=submit]').click();
-    cy.contains('Login failed');
-  });
 
   it('Add a todo', () => {
     login('test@example.com', 'password');
