@@ -104,3 +104,7 @@ Response: `204 No Content`
 - [Supertest](https://github.com/visionmedia/supertest)
 
 See `TEST_PLAN.md` for detailed test plan.
+
+## Author
+
+[DAIBOU BA](https://github.com/galsen-boy)
